@@ -98,6 +98,50 @@ user-agent = Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 
 ```
 </details>
 
+## Customizing the configuration
+
+You can also custommize the generated configuration like such:
+
+```jsonnet
+// aria2-custom.jsonnet
+local aria2 = import 'lib/aria2.libsonnet';
+local trackers = import 'trackers.json';
+local secret = std.extVar('ARIA2_SECRET');
+local user_agent = std.extVar('ARIA2_USER_AGENT');
+local aria2_home = std.extVar("ARIA2_HOME");
+local sessions_dir = aria2_home + "/sessions";
+local dht_storage_dir = aria2_home + "/data";
+{
+  ["aria2.conf"]:
+    std.manifestIni({
+      main:
+        // here you can mix and match various components of the config:
+        aria2.CoreConfig() + 
+        aria2.LogConfig() +
+        aria2.FileAllocConfig() +
+        aria2.SessionsConfig(sessions_dir) + 
+        aria2.RpcConfig(secret) + 
+        // uncomment the folowing line to configure tls to the rpc listener:
+        // aria2.RpcTlsConfig("my_cert", "my_key") +
+        // .....or change the aria2.RpcConfig(seret) section to:
+        // aria2.SecureRpcConfig(secret, "my_cert", "my_key") + 
+        aria2.HttpConfig(user_agent) +
+        aria2.SplitConfig() +
+        // the default config will configure aria2 to download Torrents
+        // if you would like to remove this behaviour, comment the lines below this, and add the following:
+        aria2.TorrentConfig() +
+        // instead of configuring aria2 to look like Transmission to torrent peers - default behaviour:
+        // aria2.TransmissionPeerConfig() +
+        // you can make your own config:
+        aria2.PeerConfig("my_agent", "my_id_prefix") + // See aria2.PeerConfig and aria2.TransmissionPeerConfig
+        aria2.DhtConfig(dht_storage_dir) +
+        aria2.Dht6Config(dht_storage_dir) +
+        aria2.TorrentTrackers(trackers),
+      sections: {}
+    }),
+}
+```
+
 ## LICENSE
 
 See [LICENSE](/LICENSE)
