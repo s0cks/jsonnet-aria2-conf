@@ -6,10 +6,7 @@ local aria2_home = std.extVar("ARIA2_HOME");
 local sessions_dir = aria2_home + "/sessions";
 local dht_storage_dir = aria2_home + "/data";
 {
-  ["aria2.conf"]:
-    std.manifestIni({
-      main:
-        aria2.CoreConfig() + 
+  ["aria2.conf"]: aria2.manifest(aria2.CoreConfig() + 
         aria2.LogConfig() +
         aria2.FileAllocConfig() +
         aria2.SessionsConfig(sessions_dir) + 
@@ -20,7 +17,5 @@ local dht_storage_dir = aria2_home + "/data";
         aria2.TransmissionPeerConfig() +
         aria2.DhtConfig(dht_storage_dir) +
         aria2.Dht6Config(dht_storage_dir) +
-        aria2.TorrentTrackers(trackers),
-      sections: {}
-    }),
+        aria2.TorrentTrackers(trackers)),
 }

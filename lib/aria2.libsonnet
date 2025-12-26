@@ -107,4 +107,9 @@
       ["dht-listen-port"]: listen_port,
       ["enable-peer-exchange"]: peer_exchange,
     },
+  manifest(config):
+    std.manifestIni({
+      main: config,
+      sections: {}
+    }),
 }
