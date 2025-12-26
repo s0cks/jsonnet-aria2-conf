@@ -1,0 +1,31 @@
+---
+version: '3'
+vars:
+  ARIA2_HOME: "/usr/local/share/aria2"
+  JSONNET_OUT_DIR: "{{.ROOT_DIR}}"
+tasks:
+  generate:
+    label: "Generate aria2.conf"
+    desc: "Generate aria2 configuration using Jsonnet"
+    vars:
+      JSONNET_MANIFEST: aria2.jsonnet
+    cmd: >
+      jsonnet -J {{.ROOT_DIR}} -S -m "{{.JSONNET_OUT_DIR}}/" {{.JSONNET_MANIFEST}} \
+        --ext-str ARIA2_SECRET="$(./bin/generate-rpc-secret)" \
+        --ext-str ARIA2_USER_AGENT="$USER_AGENT" \
+        --ext-str ARIA2_HOME="{{.ARIA2_HOME}}"
+    sources:
+    - aria2.jsonnet
+    - trackers.json
+    - lib/*.libsonnet
+    generates:
+    - "{{.JSONNET_OUT_DIR}}/aria2.conf"
+  clean:
+    label: "Clean generated files."
+    desc: "Remove generated files from out directory."
+    dir: "{{.JSONNET_OUT_DIR}}"
+    cmds:
+    - rm -rf *.conf
+  default:
+    cmds:
+    - task: generate
