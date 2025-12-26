@@ -8,6 +8,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Usage](#usage)
+  - [Prerequisites](#prerequisites)
+  - [Generating a configuration](#generating-a-configuration)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
