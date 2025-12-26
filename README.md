@@ -11,6 +11,7 @@
   - [Prerequisites](#prerequisites)
   - [Generating a configuration](#generating-a-configuration)
   - [Example generated configuration](#example-generated-configuration)
+- [Customizing the configuration](#customizing-the-configuration)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
