@@ -113,9 +113,7 @@ local aria2_home = std.extVar("ARIA2_HOME");
 local sessions_dir = aria2_home + "/sessions";
 local dht_storage_dir = aria2_home + "/data";
 {
-  ["aria2.conf"]:
-    std.manifestIni({
-      main:
+  ["aria2.conf"]: aria2.manifest(
         // here you can mix and match various components of the config:
         aria2.CoreConfig() + 
         aria2.LogConfig() +
@@ -144,8 +142,7 @@ local dht_storage_dir = aria2_home + "/data";
         //      ["my-property"]: "my-property-value",
         // }, 
         // this will mix these properties into the main configuration, just be sure to append using + operator
-      sections: {}
-    }),
+    )
 }
 ```
 
