@@ -137,6 +137,12 @@ local dht_storage_dir = aria2_home + "/data";
         aria2.DhtConfig(dht_storage_dir) +
         aria2.Dht6Config(dht_storage_dir) +
         aria2.TorrentTrackers(trackers),
+        // you can even add your own properties to the config by appending to the above config like:
+        // .... +
+        // {
+        //      ["my-property"]: "my-property-value",
+        // }, 
+        // this will mix these properties into the main configuration, just be sure to append using + operator
       sections: {}
     }),
 }
